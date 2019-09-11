@@ -70,7 +70,7 @@ public class DatePickerPlugin extends Plugin {
             calendar.setTime(javaData);
             if (mode.equals("time")) {
 
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), getTheme(theme), new TimePickerDialog.OnTimeSetListener() {
+                final TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), getTheme(theme), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         Calendar calendar1 = Calendar.getInstance();
@@ -79,7 +79,7 @@ public class DatePickerPlugin extends Plugin {
                         res.put("value", toISO8601UTC(calendar1.getTime()));
                         call.resolve(res);
                     }
-                }, calendar.get(Calendar.HOUR), calendar.get(Calendar.MINUTE), is24Hours);
+                }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), is24Hours);
 
                 if (title != null) {
                     timePickerDialog.setTitle(title);
@@ -104,6 +104,7 @@ public class DatePickerPlugin extends Plugin {
                     public void onClick(View v) {
                         res.put("value", null);
                         call.resolve(res);
+                        timePickerDialog.dismiss();
                     }
                 });
 
@@ -166,6 +167,7 @@ public class DatePickerPlugin extends Plugin {
                     public void onClick(View v) {
                         res.put("value", null);
                         call.resolve(res);
+                        datePickerDialog.dismiss();
                     }
                 });
 
